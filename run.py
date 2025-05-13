@@ -7,7 +7,7 @@ import subprocess
 
 def main(args):
     """
-    Run the complete pipeline: preprocessing, training, evaluation, and optionally the app
+    Run the complete pipeline: preprocessing, training and evaluation
     
     Parameters:
     args: Command-line arguments
@@ -32,17 +32,8 @@ def main(args):
     if args.evaluate:
         print("\n[3/3] Evaluating Models...")
         results = run_evaluation_pipeline()
-        print("Model evaluation complete!")
-    
-    # Step 4: Launch Streamlit app (optional)
-    if args.app:
-        print("\nLaunching Streamlit Application...")
-        try:
-            subprocess.run(["streamlit", "run", "app.py"])
-        except Exception as e:
-            print(f"Error launching Streamlit app: {e}")
-            print("Try running manually with: streamlit run app.py")
-    
+        print("Model evaluation complete!")  
+   
     print("\nPipeline execution completed successfully!")
     
     if not any([args.preprocess, args.train, args.evaluate, args.app]):
@@ -50,7 +41,6 @@ def main(args):
         print("  --preprocess: Run data preprocessing and EDA")
         print("  --train: Train the models")
         print("  --evaluate: Evaluate trained models")
-        print("  --app: Launch the Streamlit application")
         print("  --all: Run the complete pipeline")
         print("\nExample: python run.py --all")
 
@@ -67,11 +57,8 @@ if __name__ == "__main__":
                         help="Train the models")
     
     parser.add_argument("--evaluate", action="store_true",
-                        help="Evaluate trained models")
-    
-    parser.add_argument("--app", action="store_true",
-                        help="Launch the Streamlit application")
-    
+                        help="Evaluate trained models")  
+  
     parser.add_argument("--all", action="store_true",
                         help="Run the complete pipeline")
     
@@ -82,6 +69,5 @@ if __name__ == "__main__":
         args.preprocess = True
         args.train = True
         args.evaluate = True
-        args.app = True
     
     main(args) 
